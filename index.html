@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html> <head>
+<title>Bug 1100967</title>
+<script type="text/javascript">
+window.addEventListener("load", function() {
+  document.getElementById("standard_picker").addEventListener("change", function() {
+    alert("change");
+  });
+
+  document.getElementById("activity_picker").addEventListener("click", function() {
+    if (!("MozActivity" in window)) {
+      alert("MozActivity is not defined");
+      return;
+    }
+    var activity = new MozActivity({
+      name: "pick",
+      data: {
+        type: "application/zip"
+      }
+    });
+    activity.onsuccess = function() {
+      alert("Picked");
+    }
+    activity.onerror = function() {
+      alert("Error");
+    }
+  });
+});
+</script>
+</head>
+<body>
+
+<ul>
+  <li><input type="file" id="standard_picker"/></li>
+  <li><div id="activity_picker">pick (only FirefoxOS or Android)</div></li>
+<ul>
+</body>
+</html>
